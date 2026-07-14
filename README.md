@@ -21,23 +21,23 @@ Explain your design in plain language.
 
 Some prompts to answer:
 
-- What features does each `Song` use in your system
+- What features does each `Song` use in your system\
   genre, mood, energy, acousticness
-- What information does your `UserProfile` store
-  favorite_genre: str
-  favorite_mood: str
-  target_energy: float
+- What information does your `UserProfile` store\
+  favorite_genre: str\
+  favorite_mood: str\
+  target_energy: float\
   likes_acoustic: bool
-- How does your `Recommender` compute a score for each song
+- How does your `Recommender` compute a score for each song\
   The app compares the genre, mood, energy, and acousticness fields of each song in the CSV file against the corresponding inputs the user entered.\
   If the genres and moods match, two points and one point, respectively, will be added to the score. \
   If the song is acoustic and the user likes acoustic (acousticness must be > 0.5) or if the song is not acoustic and the user doesn't like acoustic, 0.5 points will be added. \
-  If either of these values don't match, no points will be added. If the song's energy is very far from the target energy (difference >= 10), 1 point will be deducted from the score. \
-  If the song's energy is a little far from the target energy (5 < difference < 10), no points will be added to the score. \
-  If the song's energy is very close to the target energy (1 < difference <= 5), 1 point will be added to the score.\
+  If either of these values don't match, no points will be added. If the song's energy is very far from the target energy (difference > 1.0), 1 point will be deducted from the score. \
+  If the song's energy is a little far from the target energy (0.2 < difference <= 1.0), no points will be added to the score. \
+  If the song's energy is very close to the target energy (0 <= difference <= 0.2), 1 point will be added to the score.\
   Potential bias: This system might over-prioritize genre, ignoring great songs that match user's acousticness preferences.
 
-- How do you choose which songs to recommend
+- How do you choose which songs to recommend\
   I will suggest the three songs with the highest scores generated from the described algorithm.
 
 You can include a simple diagram or bullet list if helpful.
@@ -84,12 +84,44 @@ You can add more tests in `tests/test_recommender.py`.
 Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+Loaded songs: 18
+
+User Profile: Genre=pop, Mood=happy, Energy value=0.8, Likes acoustic=False
+Top recommendations:
+1. Sunrise City
+   Score: 4.50
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+2. Open Road
+   Score: 4.00
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+
+3. Gym Hero
+   Score: 3.50
+   Reasons:
+     • genre match (+2.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+4. Rooftop Lights
+   Score: 2.50
+   Reasons:
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+5. Storm Runner
+   Score: 1.50
+   Reasons:
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
