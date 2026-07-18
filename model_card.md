@@ -68,8 +68,11 @@ Prompts:
 - Features it does not consider  
 - Genres or moods that are underrepresented  
 - Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
-
+- Ways the scoring might unintentionally favor some users\
+    The system over-prioritizes the lofi genre and happy mood because 22% of the dataset is lofi and happy music each.\
+    This is equivalent to 4 songs that are lofi and 4 songs that are happy.\
+    There are also more acoustic-leaning songs (acousticness > 0.5) than low-acoustic songs, which are 56% (10 songs) and 44% (8 songs), respectively.\
+    This unintentionally favors listeners who like to listen to music that falls into lofi, happy, and acoustic categories.  
 ---
 
 ## 7. Evaluation  
@@ -83,8 +86,138 @@ Prompts:
 - What surprised you  
 - Any simple tests or comparisons you ran  
 
-No need for numeric metrics unless you created some.
+No need for numeric metrics unless you created some.\
 
+I tested three different user profiles: high-energy pop, chill lofi, and deep intense rock. I then tested three additional edge cases and adversarial user profiles based on these ones as well as others of varying attributes (terminal output included in README.md). Below is the terminal output for each of the three user profiles.\
+
+## High-energy pop
+```
+Loaded songs: 18
+
+User Profile: Genre=pop, Mood=happy, Energy value=0.8, Likes acoustic=False
+Top recommendations:
+1. Sunrise City
+   Score: 4.5
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+2. Open Road
+   Score: 4.0
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+
+3. Gym Hero
+   Score: 3.5
+   Reasons:
+     • genre match (+2.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+4. Rooftop Lights
+   Score: 2.5
+   Reasons:
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+5. Digital Sunrise
+   Score: 2.5
+   Reasons:
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+```
+### Chill lofi
+```
+Loaded songs: 18
+
+User Profile: Genre=lofi, Mood=chill, Energy value=0.4, Likes acoustic=True
+Top recommendations:
+1. Midnight Coding
+   Score: 4.5
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+2. Library Rain
+   Score: 4.5
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+3. Focus Flow
+   Score: 3.5
+   Reasons:
+     • genre match (+2.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+4. Autumn Memories
+   Score: 3.5
+   Reasons:
+     • genre match (+2.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+5. Spacewalk Thoughts
+   Score: 2.5
+   Reasons:
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+```
+### Deep intense rock
+```
+Loaded songs: 18
+
+User Profile: Genre=rock, Mood=intense, Energy value=0.91, Likes acoustic=False
+Top recommendations:
+1. Storm Runner
+   Score: 4.5
+   Reasons:
+     • genre match (+2.0)
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+2. Gym Hero
+   Score: 2.5
+   Reasons:
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+3. Urban Heat
+   Score: 2.5
+   Reasons:
+     • mood match (+1.0)
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+4. Sunrise City
+   Score: 1.5
+   Reasons:
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+
+5. Night Drive Loop
+   Score: 1.5
+   Reasons:
+     • energy close match (+1.0)
+     • acousticness match (+0.5)
+```
+Comments: High-energy pop prefers less acoustic songs while chill lofi favors more acoustic songs.\
+Chill lofi likes low-energy songs while deep intense rock leans toward high-energy songs.\
+Deep intense rock prefers songs with an intense mood while high-energy pop likes songs with a happy mood. Note that both of these profiles like music that is high in energy and less acoustic.
 ---
 
 ## 8. Future Work  

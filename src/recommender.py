@@ -89,14 +89,14 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     song_energy = song.get('energy', 0.5)
     energy_diff = abs(target_energy - song_energy)
 
-    if energy_diff > 1.0:
-        score -= 1.0
-        reasons.append("energy very far (-1.0)")
-    elif 0.2 < energy_diff <= 1.0:
-        reasons.append("energy somewhat off (0.0)")
-    elif 0 <= energy_diff <= 0.2:
+    if 0 <= energy_diff <= 0.2:
         score += 1.0
         reasons.append("energy close match (+1.0)")
+    elif 0.2 < energy_diff <= 0.5:
+        reasons.append("energy somewhat off (0.0)")
+    else:
+        score -= 1.0
+        reasons.append("energy very off (-1.0)")
 
     # Acousticness: reward if preference matches
     song_acousticness = song.get('acousticness', 0.0)

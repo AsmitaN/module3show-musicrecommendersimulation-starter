@@ -18,13 +18,14 @@ def main() -> None:
 
     # Starter example profile
     user_prefs = {
-        "favorite_genre": "pop",
-        "favorite_mood": "happy",
-        "target_energy": 0.8,
+        "favorite_genre": "rock",
+        "favorite_mood": "intense",
+        "target_energy": 0.91,
         "likes_acoustic": False
     }
 
     print(f"""\nUser Profile: Genre={user_prefs["favorite_genre"]}, Mood={user_prefs["favorite_mood"]}, Energy value={user_prefs["target_energy"]}, Likes acoustic={user_prefs["likes_acoustic"]}""")
+    #print(f"""\nUser Profile: Genre={user_prefs["favorite_genre"]}, Energy value={user_prefs["target_energy"]}, Likes acoustic={user_prefs["likes_acoustic"]}""")
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
@@ -34,7 +35,7 @@ def main() -> None:
         # A common pattern is: (song, score, explanation)
         song, score, explanation = rec
         print(f"{i}. {song['title']}")
-        print(f"   Score: {score:.2f}")
+        print(f"   Score: {score:.1f}")
         print(f"   Reasons:")
         # Split explanation by " | " and indent each reason
         reasons = explanation.split(" | ")
@@ -45,3 +46,40 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Output for mood score removal:
+# Loaded songs: 18
+
+#User Profile: Genre=pop, Energy value=0.8, Likes acoustic=False
+#Top recommendations:
+#1. Sunrise City
+#   Score: 3.5
+#   Reasons:
+#     • genre match (+2.0)
+#     • energy close match (+1.0)
+#     • acousticness match (+0.5)
+
+#2. Gym Hero
+#   Score: 3.5
+#   Reasons:
+#     • genre match (+2.0)
+#     • energy close match (+1.0)
+#     • acousticness match (+0.5)
+
+#3. Open Road
+#   Score: 3.0
+#   Reasons:
+#     • genre match (+2.0)
+#     • energy close match (+1.0)
+
+#4. Storm Runner
+#   Score: 1.5
+#   Reasons:
+#     • energy close match (+1.0)
+#     • acousticness match (+0.5)
+
+#5. Night Drive Loop
+#   Score: 1.5
+#   Reasons:
+#     • energy close match (+1.0)
+#     • acousticness match (+0.5)
